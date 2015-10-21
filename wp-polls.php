@@ -1711,28 +1711,68 @@ function polls_activate() {
 		}
 	}
 	// Add In Options (16 Records)
-	add_option('poll_template_voteheader', '<p style="text-align: center;"><strong>%POLL_QUESTION%</strong></p>'.
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/voteheader.html")) {
+		add_option('poll_template_voteheader', '<p style="text-align: center;"><strong>%POLL_QUESTION%</strong></p>'.
 	'<div id="polls-%POLL_ID%-ans" class="wp-polls-ans">'.
 	'<ul class="wp-polls-ul">');
-	add_option('poll_template_votebody', '<li><input type="%POLL_CHECKBOX_RADIO%" id="poll-answer-%POLL_ANSWER_ID%" name="poll_%POLL_ID%" value="%POLL_ANSWER_ID%" /> <label for="poll-answer-%POLL_ANSWER_ID%">%POLL_ANSWER%</label></li>');
-	add_option('poll_template_votefooter', '</ul>'.
+	} else {
+		add_option('poll_template_voteheader',file_get_contents(get_stylesheet_directory()."/wp-polls/voteheader.html" ));
+	}	
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/votebody.html")) {
+		add_option('poll_template_votebody', '<li><input type="%POLL_CHECKBOX_RADIO%" id="poll-answer-%POLL_ANSWER_ID%" name="poll_%POLL_ID%" value="%POLL_ANSWER_ID%" /> <label for="poll-answer-%POLL_ANSWER_ID%">%POLL_ANSWER%</label></li>'); 
+	} else {
+		add_option('poll_template_votebody',file_get_contents(get_stylesheet_directory()."/wp-polls/votebody.html" ));
+	}	
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/votefooter.html")) {
+		add_option('poll_template_votefooter', '</ul>'.
 	'<p style="text-align: center;"><input type="button" name="vote" value="   '.__('Vote', 'wp-polls').'   " class="Buttons" onclick="poll_vote(%POLL_ID%);" /></p>'.
 	'<p style="text-align: center;"><a href="#ViewPollResults" onclick="poll_result(%POLL_ID%); return false;" title="'.__('View Results Of This Poll', 'wp-polls').'">'.__('View Results', 'wp-polls').'</a></p>'.
 	'</div>');
-	add_option('poll_template_resultheader', '<p style="text-align: center;"><strong>%POLL_QUESTION%</strong></p>'.
+	} else {
+		add_option('poll_template_votefooter',file_get_contents(get_stylesheet_directory()."/wp-polls/votefooter.html" ));
+	}
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/resultheader.html")) {
+		add_option('poll_template_resultheader', '<p style="text-align: center;"><strong>%POLL_QUESTION%</strong></p>'.
 	'<div id="polls-%POLL_ID%-ans" class="wp-polls-ans">'.
 	'<ul class="wp-polls-ul">');
-	add_option('poll_template_resultbody', '<li>%POLL_ANSWER% <small>(%POLL_ANSWER_PERCENTAGE%%'.__(',', 'wp-polls').' %POLL_ANSWER_VOTES% '.__('Votes', 'wp-polls').')</small><div class="pollbar" style="width: %POLL_ANSWER_IMAGEWIDTH%%;" title="%POLL_ANSWER_TEXT% (%POLL_ANSWER_PERCENTAGE%% | %POLL_ANSWER_VOTES% '.__('Votes', 'wp-polls').')"></div></li>');
-	add_option('poll_template_resultbody2', '<li><strong><i>%POLL_ANSWER% <small>(%POLL_ANSWER_PERCENTAGE%%'.__(',', 'wp-polls').' %POLL_ANSWER_VOTES% '.__('Votes', 'wp-polls').')</small></i></strong><div class="pollbar" style="width: %POLL_ANSWER_IMAGEWIDTH%%;" title="'.__('You Have Voted For This Choice', 'wp-polls').' - %POLL_ANSWER_TEXT% (%POLL_ANSWER_PERCENTAGE%% | %POLL_ANSWER_VOTES% '.__('Votes', 'wp-polls').')"></div></li>');
-	add_option('poll_template_resultfooter', '</ul>'.
+	} else {
+		add_option('poll_template_resultheader',file_get_contents(get_stylesheet_directory()."/wp-polls/resultheader.html" ));
+	}
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/resultbody.html")) {
+		add_option('poll_template_resultbody', '<li>%POLL_ANSWER% <small>(%POLL_ANSWER_PERCENTAGE%%'.__(',', 'wp-polls').' %POLL_ANSWER_VOTES% '.__('Votes', 'wp-polls').')</small><div class="pollbar" style="width: %POLL_ANSWER_IMAGEWIDTH%%;" title="%POLL_ANSWER_TEXT% (%POLL_ANSWER_PERCENTAGE%% | %POLL_ANSWER_VOTES% '.__('Votes', 'wp-polls').')"></div></li>');
+	} else {
+		add_option('poll_template_resultbody',file_get_contents(get_stylesheet_directory()."/wp-polls/resultbody.html" ));
+	}
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/resultbody2.html")) {
+		add_option('poll_template_resultbody2', '<li><strong><i>%POLL_ANSWER% <small>(%POLL_ANSWER_PERCENTAGE%%'.__(',', 'wp-polls').' %POLL_ANSWER_VOTES% '.__('Votes', 'wp-polls').')</small></i></strong><div class="pollbar" style="width: %POLL_ANSWER_IMAGEWIDTH%%;" title="'.__('You Have Voted For This Choice', 'wp-polls').' - %POLL_ANSWER_TEXT% (%POLL_ANSWER_PERCENTAGE%% | %POLL_ANSWER_VOTES% '.__('Votes', 'wp-polls').')"></div></li>');
+	} else {
+		add_option('poll_template_resultbody2',file_get_contents(get_stylesheet_directory()."/wp-polls/resultbody2.html" ));
+	}
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/resultfooter.html")) {
+		add_option('poll_template_resultfooter', '</ul>'.
 	'<p style="text-align: center;">'.__('Total Voters', 'wp-polls').': <strong>%POLL_TOTALVOTERS%</strong></p>'.
 	'</div>');
-	add_option('poll_template_resultfooter2', '</ul>'.
+	} else {
+		add_option('poll_template_resultfooter',file_get_contents(get_stylesheet_directory()."/wp-polls/resultfooter.html" ));
+	}
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/resultfooter2.html")) {
+		add_option('poll_template_resultfooter2', '</ul>'.
 	'<p style="text-align: center;">'.__('Total Voters', 'wp-polls').': <strong>%POLL_TOTALVOTERS%</strong></p>'.
 	'<p style="text-align: center;"><a href="#VotePoll" onclick="poll_booth(%POLL_ID%); return false;" title="'.__('Vote For This Poll', 'wp-polls').'">'.__('Vote', 'wp-polls').'</a></p>'.
 	'</div>');
-	add_option('poll_template_disable', __('Sorry, there are no polls available at the moment.', 'wp-polls'));
-	add_option('poll_template_error', __('An error has occurred when processing your poll.', 'wp-polls'));
+	} else {
+		add_option('poll_template_resultfooter2',file_get_contents(get_stylesheet_directory()."/wp-polls/resultfooter2.html" ));
+	}
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/disable.html")) {
+		add_option('poll_template_disable', __('Sorry, there are no polls available at the moment.', 'wp-polls'));
+	} else {
+		add_option('poll_template_disable',file_get_contents(get_stylesheet_directory()."/wp-polls/disable.html" ));
+	}
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/error.html")) {
+		add_option('poll_template_error', __('An error has occurred when processing your poll.', 'wp-polls'));
+	} else {
+		add_option('poll_template_error',file_get_contents(get_stylesheet_directory()."/wp-polls/error.html" ));
+	}
 	add_option('poll_currentpoll', 0);
 	add_option('poll_latestpoll', 1);
 	add_option('poll_archive_perpage', 5);
@@ -1754,12 +1794,23 @@ function polls_activate() {
 	add_option('poll_close', 1);
 	// Database Upgrade For WP-Polls 2.20
 	add_option('poll_ajax_style', array('loading' => 1, 'fading' => 1));
-	add_option('poll_template_pollarchivelink', '<ul>'.
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/pollarchivelink.html")) {
+		add_option('poll_template_pollarchivelink', '<ul>'.
 	'<li><a href="%POLL_ARCHIVE_URL%">'.__('Polls Archive', 'wp-polls').'</a></li>'.
-	'</ul>');
+	'</ul>'); } else {
+		add_option('poll_template_pollarchivelink',file_get_contents(get_stylesheet_directory()."/wp-polls/pollarchivelink.html" ));
+	}
 	add_option('poll_archive_displaypoll', 2);
-	add_option('poll_template_pollarchiveheader', '');
-	add_option('poll_template_pollarchivefooter', '<p>'.__('Start Date:', 'wp-polls').' %POLL_START_DATE%<br />'.__('End Date:', 'wp-polls').' %POLL_END_DATE%</p>');
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/pollarchiveheader.html")) {
+		add_option('poll_template_pollarchiveheader', '');
+	} else {
+		add_option('poll_template_pollarchiveheader',file_get_contents(get_stylesheet_directory()."/wp-polls/pollarchiveheader.html" ));
+	}
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/pollarchivefooter.html")) {
+		add_option('poll_template_pollarchivefooter', '<p>'.__('Start Date:', 'wp-polls').' %POLL_START_DATE%<br />'.__('End Date:', 'wp-polls').' %POLL_END_DATE%</p>');
+	} else {
+		add_option('poll_template_pollarchivefooter',file_get_contents(get_stylesheet_directory()."/wp-polls/pollarchivefooter.html" ));
+	}
 	maybe_add_column($wpdb->pollsq, 'pollq_multiple', "ALTER TABLE $wpdb->pollsq ADD pollq_multiple TINYINT( 3 ) NOT NULL DEFAULT '0';");
 	$pollq_totalvoters = maybe_add_column($wpdb->pollsq, 'pollq_totalvoters', "ALTER TABLE $wpdb->pollsq ADD pollq_totalvoters INT( 10 ) NOT NULL DEFAULT '0';");
 	if($pollq_totalvoters) {
@@ -1770,8 +1821,16 @@ function polls_activate() {
 	}
 	// Database Upgrade For WP-Polls 2.30
 	add_option('poll_cookielog_expiry', 0);
-	add_option('poll_template_pollarchivepagingheader', '');
-	add_option('poll_template_pollarchivepagingfooter', '');
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/pollarchivepagingheader.html")) {
+		add_option('poll_template_pollarchivepagingheader', '');
+	} else {
+		add_option('poll_template_pollarchivepagingheader',file_get_contents(get_stylesheet_directory()."/wp-polls/pollarchivepagingheader.html" ));
+	}
+	if (!file_exists(get_stylesheet_directory()."/wp-polls/pollarchivepagingfooter.html")) {
+		add_option('poll_template_pollarchivepagingfooter', '');
+	} else {
+		add_option('poll_template_pollarchivepagingfooter',file_get_contents(get_stylesheet_directory()."/wp-polls/pollarchivepagingfooter.html" ));		
+	}
 	// Database Upgrade For WP-Polls 2.50
 	delete_option('poll_archive_show');
 
