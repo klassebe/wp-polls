@@ -126,7 +126,7 @@ if( isset($_POST['Submit']) && $_POST['Submit'] ) {
 			if (file_exists(get_stylesheet_directory()."/wp-polls/".$template.".html")) { 
 					//$templatecontents = 
 				?>
-				defaulttemplates["theme"]["<?php echo($template); ?>"]= '<?php echo(addslashes(file_get_contents(get_stylesheet_directory()."/wp-polls/".$template.".html" ))); ?>';				
+				defaulttemplates["theme"]["<?php echo($template); ?>"]= "<?php echo(addslashes(preg_replace( '/\r|\n/','',file_get_contents(get_stylesheet_directory()."/wp-polls/".$template.".html" )))); ?>";				
 		<?php } 
 		} ?>
 		var default_template;					
